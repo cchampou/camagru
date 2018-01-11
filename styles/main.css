@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Montserrat";
-	src: url('../fonts/Montserrat-Thin.ttf');
+	src: url('../fonts/Montserrat-Light.ttf');
 }
 
 html, body {
@@ -16,6 +16,11 @@ body {
 	background-color: #E8EAF6;
 }
 
+.wrap {
+	padding-top: 6em;
+	height: auto;
+}
+
 header {
 	position: absolute;
 	top: 0;
@@ -24,6 +29,36 @@ header {
 	background-color: #5C6BC0;
 	padding: 0 10%;
 	color: white;
+}
+
+header nav {
+	position: absolute;
+	top: 0;
+	right: 10%;
+	height: 5.1em;
+}
+
+header nav {
+	height: 100%;
+}
+
+header nav a {
+	text-decoration: none;
+	color: white;
+	display: block;
+	height: 100%;
+	float: left;
+	line-height: 4.9em;
+	padding: 0 1em;
+	font-size: 1.1em;
+}
+
+header nav a:hover {
+	background-color: #3F51B5;
+}
+
+.nav-highlight {
+	background-color: #1A237E;
 }
 
 footer {
@@ -38,4 +73,10 @@ footer {
 
 footer p {
 	text-align: center;
+}
+
+h2 {
+	text-align: center;
+	padding: 1em 0;
+	margin: 0;
 }

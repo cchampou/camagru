@@ -1,0 +1,41 @@
+@font-face {
+	font-family: "Montserrat";
+	src: url('../fonts/Montserrat-Thin.ttf');
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+	width: 100%;
+	font-family: "Montserrat";
+	text-shadow: 0 0 1px rgba(255,255,255,0.4);
+}
+
+body {
+	background-color: #E8EAF6;
+}
+
+header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 80%;
+	background-color: #5C6BC0;
+	padding: 0 10%;
+	color: white;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: #5C6BC0;
+	width: 80%;
+	color: white;
+	padding: 0 10%;
+}
+
+footer p {
+	text-align: center;
+}

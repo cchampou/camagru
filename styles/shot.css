@@ -1,0 +1,11 @@
+#camwrap {
+	width: 70%;
+	overflow: hidden;
+	float: left;
+}
+
+#recent {
+	float: right;
+	width: 28%;
+	margin: 1em 1%;
+}

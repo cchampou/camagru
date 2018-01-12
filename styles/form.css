@@ -1,0 +1,37 @@
+form {
+	width: 100%;
+}
+
+label {
+	display: block;
+	width: 100%;
+}
+
+input {
+	margin: 1em 0;
+	line-height: 1.5em;
+	font-size: 1.25em;
+	width: 100%;
+
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+	background: none;
+	border-style: solid;
+	border-color: #B39DDB;
+	border-width: 0 0 2px 0;
+}
+
+input:focus {
+	border-color: #1A237E;
+	outline: none !important;
+}
+
+input[type="submit"] {
+	border: none;
+	background-color: #1A237E;
+	border-radius: 0;
+	color: white;
+	font-weight: lighter;
+	cursor: pointer;
+}

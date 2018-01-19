@@ -1,6 +1,6 @@
 		</div>
 		<footer>
-			<p>Camagru - cchampou 2017</p>
+			<p>Camagru - cchampou 2018</p>
 		</footer>
 	</body>
 </html>

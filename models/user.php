@@ -1,26 +1,37 @@
 <?php
 
+require('config/database.php');
+
 class UserModel {
 
-	public function __construct() {
-		$this->db = new PDO('mysql:host=localhost;dbname=camagru', 'root', 'b8gt5k98c');
-	}
-
-	private $db;
-
-	public function signin($pseudo, $email, $password) {
-		$existing = $this->db->prepare('SELECT * FROM users WHERE email = ?');
+	public function signup($pseudo, $email, $password, $confirmation) {
+		global $db;
+		if (strlen($pseudo) < 3 || !preg_match("/^[a-z_ \-0-9]*$/i", $pseudo)) {
+			throw new Exception("Votre pseudo doit contenir au moins 3 caractères, alphanumériques uniquement (les espaces et les tirets sont égalements valides)");
+		}
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			throw new Exception("Cette adresse email n'est pas valide");
+		}
+		if (strlen($password) < 8) {
+			throw new Exception("Le mot de passe doit contenir au moins 8 caractères");
+		}
+		if ($password != $confirmation) {
+			throw new Exception("Le mot de passe et sa confirmation ne correspondent pas");
+		}
+		$existing = $db->prepare('SELECT * FROM users WHERE email = ?');
 		$existing->execute(array($email));
 		if (count($existing->fetchAll()) > 0) {
 			throw new Exception("Cet email est déjà associé à un compte");
 		}
-		$create = $this->db->prepare('INSERT INTO users VALUES (null, ?, ?, ?)');
-		$create->execute(array($pseudo, $email, password_hash($password, PASSWORD_BCRYPT)));
-		return "Votre compte a été créé avec succès";
+		$create = $db->prepare('INSERT INTO users (pseudo, email, hash) VALUES (?, ?, ?)');
+		if (!$create->execute(array($pseudo, $email, password_hash($password, PASSWORD_BCRYPT)))) {
+			throw new Exception("Une erreur inconnue est survenue lors de la création du compte ".$pseudo.' '.$email);
+		}
 	}
 
 	public function login($email, $password) {
-		$user = $this->db->prepare("SELECT * FROM users WHERE email = ?");
+		global $db;
+		$user = $db->prepare("SELECT * FROM users WHERE email = ?");
 		$user->execute(array($email));
 		$userdata = $user->fetch();
 		if (password_verify($password, $userdata['hash'])) {
@@ -30,8 +41,37 @@ class UserModel {
 		}
 	}
 
+	public function changePseudo($pseudo) {
+		global $db;
+		if (!$_SESSION['id']) {
+			throw new Exception("Vous devez être connecté pour effectuer cette action");
+		}
+		if (strlen($pseudo) < 3 || !preg_match("/^[a-z_ \-0-9]*$/i", $pseudo)) {
+			throw new Exception("Votre pseudo doit contenir au moins 3 caractères, alphanumériques uniquement (les espaces et les tirets sont égalements valides)");
+		}
+		$change = $db->prepare("UPDATE users SET pseudo = ? WHERE id = ?");
+		if (!$change->execute(array($pseudo, $_SESSION['id']))) {
+			throw new Exception("Une erreur inconnue s'est produite, veuillez réesayer");
+		}
+	}
+
+	public function changeEmail($email) {
+		global $db;
+		if (!$_SESSION['id']) {
+			throw new Exception("Vous devez être connecté pour effectuer cette action");
+		}
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			throw new Exception("Cette adresse email n'est pas valide");
+		}
+		$change = $db->prepare("UPDATE users SET email = ? WHERE id = ?");
+		if (!$change->execute(array($email, $_SESSION['id']))) {
+			throw new Exception("Une erreur inconnue s'est produite, veuillez réesayer");
+		}
+	}
+
 	public function getUser($id) {
-		$user = $this->db->prepare("SELECT * FROM users WHERE id = ?");
+		global $db;
+		$user = $db->prepare("SELECT * FROM users WHERE id = ?");
 		$user->execute(array($id));
 		return $user->fetch();
 	}

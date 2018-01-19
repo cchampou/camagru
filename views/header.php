@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title><?= $controller ?> - <?= $action ?> - Camagru</title>
+		<title>Camagru</title>
 		<link rel="stylesheet" type="text/css" href="../styles/main.css" />
 		<link rel="stylesheet" type="text/css" href="../styles/shot.css" />
 		<link rel="stylesheet" type="text/css" href="../styles/form.css" />
@@ -12,7 +12,7 @@
 			<nav>
 				<a href="/"><i class="fas fa-home"></i> Accueil</a>
 				<?php
-				if (!$_SESSION['id']) {
+				if (!$_SESSION) {
 					?>
 					<a href="/user/login"><i class="fas fa-sign-in-alt"></i> Connexion</a>
 					<a href="/user/signup" class="nav-highlight"><i class="fas fa-user"></i> Inscription</a>

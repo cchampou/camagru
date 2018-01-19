@@ -4,20 +4,17 @@
 }
 
 html, body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
 	width: 100%;
 	font-family: "Montserrat";
+	margin: 0;
 	text-shadow: 0 0 1px rgba(255,255,255,0.4);
 }
 
 body {
-	background-color: #E8EAF6;
+	background-color: ;
 }
 
 .wrap {
-	padding-top: 6em;
 	height: auto;
 	max-width: 30%;
 	margin: auto;
@@ -28,23 +25,25 @@ body {
 }
 
 header {
-	position: absolute;
-	top: 0;
-	left: 0;
+	height: 5.1em;
 	width: 80%;
 	background-color: #5C6BC0;
 	padding: 0 10%;
 	color: white;
 }
 
+header h1 {
+	float: left;
+}
+
 header nav {
-	position: absolute;
-	top: 0;
+	float: right;
 	right: 10%;
 	height: 5.1em;
 }
 
 header nav {
+	display: block;
 	height: 100%;
 }
 
@@ -68,12 +67,9 @@ header nav a:hover {
 }
 
 footer {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	background-color: #5C6BC0;
-	width: 80%;
-	color: white;
+	width: 30%;
+	margin: auto;
+	color: black;
 	padding: 0 10%;
 }
 

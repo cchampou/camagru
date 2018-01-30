@@ -9,6 +9,9 @@ $postmodel = new PostModel();
 switch ($action) {
 	case 'login':
 		$message = NULL;
+		if ($_GET && array_key_exists('prompt', $_GET) && $_GET['prompt'] == "true") {
+			$message = '<p class="message fail">Vous devez être connecté pour faire ceci</p>';
+		}
 		if ($_POST && $_POST['email'] && $_POST['password']) {
 			try {
 				$message = $usermodel->login($_POST['email'], $_POST['password']);
@@ -95,7 +98,7 @@ switch ($action) {
 			require("./views/account.php");
 			require("./views/footer.php");
 		} else {
-			header("Location: /user/login");
+			header("Location: /user/login?prompt=true");
 		}
 		break;
 
@@ -164,7 +167,7 @@ switch ($action) {
 			require("./views/shot.php");
 			require("./views/footer.php");
 		} else {
-			header("Location: /user/login");
+			header("Location: /user/login?prompt=true");
 		}
 		break;
 

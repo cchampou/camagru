@@ -6,7 +6,7 @@
 			<p><?= $post['pseudo']; ?></p>
 			<img src="<?= '/'.$post['img']; ?>" alt="Image du post" />
 			<div class="reaction">
-				<p class="reaction-count"><?= count($post['likes']); ?> likes, <?= count($post['comments']); ?> commentaires</p>
+				<p class="reaction-count"><?= count($post['likes']).((count($post['likes']) < 2)?' like':' likes'); ?>, <?= count($post['comments']).((count($post['comments']) < 2)?' commentaire':' commentaires'); ?></p>
 				<?php
 				if ($_SESSION && in_array($_SESSION['id'], $post['likes'])) {
 					?>

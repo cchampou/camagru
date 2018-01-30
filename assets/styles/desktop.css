@@ -1,0 +1,19 @@
+.wrap-large {
+	height: auto;
+	max-width: 60%;
+	margin: auto;
+}
+
+.wrap-center {
+	height: auto;
+	max-width: 30%;
+	margin: auto;
+}
+
+header nav.mobile-menu {
+	display: none;
+}
+
+header nav.tablet-menu {
+	display: none;
+}

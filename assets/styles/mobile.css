@@ -1,0 +1,35 @@
+.wrap-large {
+	height: auto;
+	max-width: 90%;
+	margin: auto;
+}
+
+.wrap-center {
+	height: auto;
+	max-width: 90%;
+	margin: auto;
+}
+
+header nav.desktop-menu {
+	display: none !important;
+}
+
+header nav.tablet-menu {
+	display: none !important;
+}
+
+header #dropdown-mobile {
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 5.1em;
+}
+
+header #dropdown-mobile a {
+	width: 100%;
+	background-color: #5C6BC0;
+}
+
+header nav a:hover {
+	background-color: #5C6BC0;
+}

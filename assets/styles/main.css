@@ -14,18 +14,6 @@ body {
 	background-color: #ECEFF1;
 }
 
-.wrap-large {
-	height: auto;
-	max-width: 60%;
-	margin: auto;
-}
-
-.wrap-center {
-	height: auto;
-	max-width: 30%;
-	margin: auto;
-}
-
 .center-block {
 	margin: auto;
 }
@@ -41,6 +29,12 @@ header {
 
 header h1 {
 	float: left;
+	font-size: 1.5em;
+	line-height: 2.4em;
+}
+
+header a {
+	color: white;
 }
 
 header nav {

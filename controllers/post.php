@@ -15,7 +15,7 @@ switch ($action) {
 			}
 			header("Location: /user/shot");
 		} else {
-			header("Location: /user/login");
+			header("Location: /user/login?prompt=true");
 		}
 		break;
 
@@ -24,9 +24,17 @@ switch ($action) {
 			if ($_GET && array_key_exists('id', $_GET)) {
 				$postmodel->toggleLike($_GET['id']);
 			}
-			header("Location: /home/index");
+			if (array_key_exists('X-Async-Agent', getallheaders())) {
+				http_response_code(200);
+			} else {
+				header("Location: /home/index");
+			}
 		} else {
-			header("Location: /user/login");
+			if (array_key_exists('X-Async-Agent', getallheaders())) {
+				http_response_code(202);
+			} else {
+				header("Location: /user/login?prompt=true");
+			}
 		}
 		break;
 
@@ -41,9 +49,17 @@ switch ($action) {
 			if ($_POST && array_key_exists('id', $_POST) && array_key_exists('content', $_POST)) {
 				$postmodel->comment($_POST['id'], $_POST['content']);
 			}
-			header("Location: /home/index");
+			if (array_key_exists('X-Async-Agent', getallheaders())) {
+				http_response_code(200);
+			} else {
+				header("Location: /home/index");
+			}
 		} else {
-			header("Location: /user/login");
+			if (array_key_exists('X-Async-Agent', getallheaders())) {
+				http_response_code(202);
+			} else {
+				header("Location: /user/login?prompt=true");
+			}
 		}
 		break;
 

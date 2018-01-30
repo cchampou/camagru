@@ -12,7 +12,24 @@ input {
 	line-height: 1.5em;
 	font-size: 1.25em;
 	width: 100%;
+}
 
+.message {
+	padding: 1em;
+	box-shadow: 1px 1px 2px gray;
+	border-radius: 2px;
+}
+
+.success {
+	background-color: #8BC34A;
+	color: white;
+	font-weight: bold;
+}
+
+.fail {
+	background-color: #FF5722;
+	color: white;
+	font-weight: bold;
 }
 
 input[type="text"], input[type="password"], input[type="email"] {
@@ -30,8 +47,18 @@ input:focus {
 input[type="submit"] {
 	border: none;
 	background-color: #1A237E;
-	border-radius: 0;
+	border-radius: 2px;
 	color: white;
+	box-shadow: 1px 1px 2px gray;
 	font-weight: lighter;
 	cursor: pointer;
+}
+
+input[type="submit"]:disabled {
+	background-color: gray;
+	cursor: not-allowed;
+}
+
+input[type="radio"] {
+	width: 2em;
 }

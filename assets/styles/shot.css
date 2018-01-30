@@ -1,0 +1,68 @@
+#viewport {
+	width: 70%;
+	overflow: hidden;
+	float: left;
+}
+
+#camwrap {
+	width: 100%;
+	overflow: hidden;
+}
+
+#or {
+	text-align: center;
+}
+
+#recent {
+	float: right;
+	width: 28%;
+	margin: 1em 1%;
+}
+
+#clearfix {
+	height: 2em;
+	width: 100%;
+	clear: both;
+}
+
+.filter {
+	width: 5em;
+}
+
+#camtopwrap {
+	position: relative;
+}
+
+#shotit {
+	position: absolute;
+	bottom: 1em;
+	left: 50%;
+	background-color: gray;
+	cursor: disabled;
+	border: none;
+	color: white;
+	padding: 1em;
+	font-size: 1em;
+	transform: translateX(-50%);
+	border-radius: 2em;
+	z-index: 20;
+}
+
+#canvas {
+	position: absolute;
+	z-index: -1;
+	height: 100%;
+	width: 100%;
+}
+
+#preview {
+	position: absolute;
+	z-index: 10;
+	height: 100%;
+	width: 100%;
+}
+
+.mini {
+	width: 100%;
+	margin: 3px 0;
+}

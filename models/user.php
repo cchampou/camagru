@@ -4,6 +4,14 @@ require('config/database.php');
 
 class UserModel {
 
+	public function checkLoggedIn() {
+		if (!$_SESSION || !$_SESSION['id']) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public function signup($pseudo, $email, $password, $confirmation) {
 		global $db;
 		if (strlen($pseudo) < 3 || !preg_match("/^[a-z_ \-0-9]*$/i", $pseudo)) {
@@ -69,6 +77,20 @@ class UserModel {
 		}
 	}
 
+	public function changePass($password, $new, $confirm) {
+		global $db;
+		if (!$_SESSION['id']) {
+			throw new Exception("Vous devez être connecté pour effectuer cette action");
+		}
+		if (strlen($new) < 8) {
+			throw new Exception("Le nouveau mot de passe doit contenir au moins 8 caractères");
+		}
+		if ($new != $confirmation) {
+			throw new Exception("Le nouveau mot de passe et sa confirmation ne correspondent pas");
+		}
+		$user = $this->getUser($_SESSION['id']);
+	}
+
 	public function getUser($id) {
 		global $db;
 		$user = $db->prepare("SELECT * FROM users WHERE id = ?");
@@ -76,5 +98,3 @@ class UserModel {
 		return $user->fetch();
 	}
 }
-
-?>

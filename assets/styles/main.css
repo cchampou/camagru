@@ -1,0 +1,167 @@
+@font-face {
+	font-family: "Montserrat";
+	src: url('../fonts/Montserrat-Light.ttf');
+}
+
+html, body {
+	width: 100%;
+	font-family: "Montserrat";
+	margin: 0;
+	text-shadow: 0 0 1px rgba(255,255,255,0.4);
+}
+
+body {
+	background-color: #ECEFF1;
+}
+
+.wrap-large {
+	height: auto;
+	max-width: 60%;
+	margin: auto;
+}
+
+.wrap-center {
+	height: auto;
+	max-width: 30%;
+	margin: auto;
+}
+
+.center-block {
+	margin: auto;
+}
+
+header {
+	height: 5.1em;
+	width: 80%;
+	background-color: #5C6BC0;
+	padding: 0 10%;
+	color: white;
+	box-shadow: 0 0 10px gray;
+}
+
+header h1 {
+	float: left;
+}
+
+header nav {
+	float: right;
+	right: 10%;
+	height: 5.1em;
+}
+
+header nav {
+	display: block;
+	height: 100%;
+}
+
+header nav a {
+	text-decoration: none;
+	color: white;
+	display: block;
+	height: 100%;
+	float: left;
+	line-height: 4.9em;
+	padding: 0 1em;
+	font-size: 1.1em;
+}
+
+header nav a:hover {
+	background-color: #3F51B5;
+}
+
+.nav-highlight {
+	background-color: #1A237E;
+}
+
+footer {
+	width: 30%;
+	margin: auto;
+	color: black;
+	padding: 0 10%;
+	clear: both;
+}
+
+footer p {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+	padding: 1em 0;
+	margin: 0;
+}
+
+.post {
+	background-color: white;
+	border-radius: 2px;
+	box-shadow: 0 0 3px gray;
+	padding: 1em;
+	margin: 1em 0;
+}
+
+.post p {
+	margin-top: 0;
+	font-weight: bold;
+}
+
+.post img {
+	width: 100%;
+}
+
+.reaction {
+	height: auto;
+	margin-top: 1em;
+}
+
+.reaction > a {
+	color: red;
+	margin: 5px 0;
+	display: block;
+	float: left;
+}
+
+.reaction form {
+	width: 90%;
+	float: right;
+	margin: 0;
+}
+
+.reaction form textarea {
+	padding: 5px;
+	border-radius: 2px;
+	border: none;
+	width: 85%;
+}
+
+.reaction form button {
+	background-color: #1A237E;
+	font-size: 1em;
+	border: none;
+	color: white;
+	width: 10%;
+	padding: 5px 0;
+	margin: 0;
+	float: right;
+	border-radius: 2px;
+}
+
+.reaction p {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: normal;
+}
+
+.reaction p a {
+	color: #263238;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.comments .author {
+	font-weight: bold;
+}
+
+.pagination {
+	text-align: center;
+	font-size: 2em;
+}

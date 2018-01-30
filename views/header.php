@@ -1,10 +1,11 @@
 <html>
 	<head>
 		<title>Camagru</title>
-		<link rel="stylesheet" type="text/css" href="../styles/main.css" />
-		<link rel="stylesheet" type="text/css" href="../styles/shot.css" />
-		<link rel="stylesheet" type="text/css" href="../styles/form.css" />
-		<link rel="stylesheet" type+"text/css" href="../styles/fa/fontawesome-all.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/styles/main.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/styles/shot.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/styles/form.css" />
+		<link rel="stylesheet" type+"text/css" href="../assets/styles/fa/fontawesome-all.css" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 	</head>
 	<body>
 		<header>
@@ -27,6 +28,3 @@
 				?>
 			</nav>
 		</header>
-		<div class="wrap">
-	</body>
-</html>

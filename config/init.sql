@@ -5,7 +5,9 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `pseudo` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `hash` varchar(255) NOT NULL
+  `hash` varchar(255) NOT NULL,
+  `active` boolean DEFAULT 0,
+  `activation_hash` varchar(255) NOT NULL
 );
 
 CREATE TABLE `posts` (

@@ -32,10 +32,11 @@ switch ($action) {
 		break;
 
 	case 'signup':
+		// echo phpinfo();
 		if ($_POST && $_POST['email'] && $_POST['pseudo'] && $_POST['password'] && $_POST['confirmation']) {
 			try {
 				$usermodel->signup($_POST['pseudo'], $_POST['email'], $_POST['password'], $_POST['confirmation']);
-				header("Location:/user/login");
+				// header("Location:/user/login");
 			} catch (Exception $e) {
 				$message = '<p class="message fail">'.$e->getMessage().'</p>';
 			}

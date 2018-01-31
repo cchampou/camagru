@@ -26,15 +26,17 @@ class UserModel {
 		if ($password != $confirmation) {
 			throw new Exception("Le mot de passe et sa confirmation ne correspondent pas");
 		}
+		$activation_hash = md5(uniqid());
 		$existing = $db->prepare('SELECT * FROM users WHERE email = ?');
 		$existing->execute(array($email));
 		if (count($existing->fetchAll()) > 0) {
 			throw new Exception("Cet email est déjà associé à un compte");
 		}
-		$create = $db->prepare('INSERT INTO users (pseudo, email, hash) VALUES (?, ?, ?)');
-		if (!$create->execute(array($pseudo, $email, password_hash($password, PASSWORD_BCRYPT)))) {
+		$create = $db->prepare('INSERT INTO users (pseudo, email, hash, activation_hash) VALUES (?, ?, ?, ?)');
+		if (!$create->execute(array($pseudo, $email, password_hash($password, PASSWORD_BCRYPT), $activation_hash))) {
 			throw new Exception("Une erreur inconnue est survenue lors de la création du compte ".$pseudo.' '.$email);
 		}
+		echo mail($email, "Activation de votre compte Camagru", "test");
 	}
 
 	public function login($email, $password) {

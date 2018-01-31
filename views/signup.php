@@ -10,6 +10,7 @@
 		<input type="password" name="password" />
 		<label>Confirmation du mot de passe</label>
 		<input type="password" name="confirmation" />
+		<input type="hidden" name="coucou" value="<?= $_SESSION['coucou']; ?>" />
 		<input type="submit" name="check" value="Se connecter">
 	</form>
 </div>

@@ -6,6 +6,15 @@ require('./models/post.php');
 $usermodel = new UserModel();
 $postmodel = new PostModel();
 
+
+if ($_POST && !array_key_exists('X-Async-Agent', getallheaders())) {
+	if (!array_key_exists('coucou', $_POST) || $_POST['coucou'] != $_SESSION['coucou']) {
+		die('Echec de la validation CSRF');
+	}
+}
+
+$_SESSION['coucou'] = md5(uniqid(rand(), TRUE));
+
 switch ($action) {
 
 	case "delete":
@@ -45,6 +54,7 @@ switch ($action) {
 		break;
 
 	case "comment":
+		$_SESSION['coucou'] = $backup_token;
 		if ($usermodel->checkLoggedIn()) {
 			if ($_POST && array_key_exists('id', $_POST) && array_key_exists('content', $_POST)) {
 				$postmodel->comment($_POST['id'], $_POST['content']);

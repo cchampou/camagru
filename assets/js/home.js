@@ -30,11 +30,12 @@ function toggleLike(e, id) {
 
 function sendComment(e, id) {
 	var content = e.parentElement.getElementsByTagName('textarea')[0];
+	var token = e.parentElement.getElementsByTagName('input')[0];
 	if (content.value.length > 0) {
 		e.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
 		var reactionCount = e.parentElement.parentElement.getElementsByClassName("reaction-count")[0];
 		var commentSection = e.parentElement.parentElement.getElementsByClassName("comments")[0];
-		httpPost("/post/comment", "content="+content.value+"&id="+id, function(status, data) {
+		httpPost("/post/comment", "content="+content.value+"&coucou="+token.value+"&id="+id, function(status, data) {
 			if (status == 200) {
 				e.parentElement.getElementsByTagName('textarea')[0].value = "";
 				e.innerHTML = '<i class="fas fa-paper-plane"></i>';

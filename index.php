@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $available_controllers = array('home', 'post', 'user');
 if ($_GET && array_key_exists('route', $_GET)) {
 	$route_array = explode("/", $_GET['route']);

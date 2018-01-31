@@ -5,10 +5,10 @@ require('config/database.php');
 class UserModel {
 
 	public function checkLoggedIn() {
-		if (!$_SESSION || !$_SESSION['id']) {
-			return false;
-		} else {
+		if ($_SESSION && $_SESSION['id']) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 

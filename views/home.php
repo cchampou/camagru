@@ -8,7 +8,7 @@
 			<div class="reaction">
 				<p class="reaction-count"><?= count($post['likes']).((count($post['likes']) < 2)?' like':' likes'); ?>, <?= count($post['comments']).((count($post['comments']) < 2)?' commentaire':' commentaires'); ?></p>
 				<?php
-				if ($_SESSION && in_array($_SESSION['id'], $post['likes'])) {
+				if ($_SESSION && array_key_exists('id', $_SESSION) && in_array($_SESSION['id'], $post['likes'])) {
 					?>
 					<a href="/post/like?id=<?= $post['postid']; ?>" onclick="return toggleLike(this, <?= $post['postid']; ?>);" data-liked="false"><i class="fas fa-heart"></i></a>
 					<?php
@@ -19,6 +19,7 @@
 				}
 				?>
 				<form method="post" action="/post/comment">
+					<input type="hidden" name="coucou" value="<?= $_SESSION['coucou']; ?>" />
 					<input type="hidden" name="id" value="<?= $post['postid']; ?>" />
 					<textarea name="content" placeholder="Lache ton com ..." rows="1" ></textarea>
 					<button type="submit" onclick="return sendComment(this, <?= $post['postid']; ?>);"><i class="fas fa-paper-plane"></i></button>

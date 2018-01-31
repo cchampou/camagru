@@ -6,6 +6,13 @@ require('./models/post.php');
 $usermodel = new UserModel();
 $postmodel = new PostModel();
 
+if ($_POST) {
+	if (!array_key_exists('coucou', $_POST) || $_POST['coucou'] != $_SESSION['coucou']) {
+		die('Echec de la validation CSRF');
+	}
+}
+$_SESSION['coucou'] = md5(uniqid(rand(), TRUE));
+
 switch ($action) {
 	case 'login':
 		$message = NULL;
@@ -26,13 +33,11 @@ switch ($action) {
 		break;
 
 	case 'logout':
-		session_unset();
-		session_destroy();
+		unset($_SESSION['id']);
 		header("Location:/");
 		break;
 
 	case 'signup':
-		// echo phpinfo();
 		if ($_POST && $_POST['email'] && $_POST['pseudo'] && $_POST['password'] && $_POST['confirmation']) {
 			try {
 				$usermodel->signup($_POST['pseudo'], $_POST['email'], $_POST['password'], $_POST['confirmation']);

@@ -7,6 +7,7 @@
 			<label for="filter1" style="float: left; display: block; width: 5em;"><img src="../cool.png" alt="Filtre 1" class="filter" /><input type="radio" id="filter1" name="overlay" value="1"></label>
 			<label for="filter2" style="float: left; display: block; width: 5em;"><img src="../idc.png" alt="Filtre 2" class="filter" /><input type="radio" id="filter2" name="overlay" value="2"></label>
 			<label for="filter3" style="float: left; display: block; width: 5em;"><img src="../dude.png" alt="Filtre 3" class="filter" /><input type="radio" id="filter3" name="overlay" value="3"></label>
+			<input type="hidden" name="coucou" value="<?= $_SESSION['coucou']; ?>" />
 			<input type="file" name="shot" />
 			<input type="submit" name="sendfile" value="Envoyer" id="sendfile" disabled />
 			<p id="or">OU</p>

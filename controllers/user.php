@@ -32,16 +32,67 @@ switch ($action) {
 		require("./views/footer.php");
 		break;
 
+	case 'reset':
+		$message = NULL;
+		if ($_POST && $_POST['email']) {
+			try {
+				$message = $usermodel->reset($_POST['email']);
+				header("Location:/user/signup");
+			} catch (Exception $e) {
+				$message = '<p class="message fail">'.$e->getMessage().'</p>';
+			}
+		}
+		require("./views/header.php");
+		require("./views/reset.php");
+		require("./views/footer.php");
+		break;
+
+	case 'newpass':
+		$message = NULL;
+		if ($_POST && array_key_exists('password', $_POST) && array_key_exists('confirmation', $_POST) && array_key_exists('token', $_GET)) {
+			if (isset($_POST['password']) && isset($_POST['confirmation'])) {
+				try {
+					$usermodel->resetPass($_POST['password'], $_POST['confirmation'], $_GET['token']);
+					header("Location: /user/login");
+				} catch (Exception $e) {
+					$message = '<p class="message fail">'.$e->getMessage().'</p>';
+				}
+			} else {
+				$message = '<p class="message fail">Veuillez renseigner tous les champs</p>';
+			}
+		}
+		require("./views/header.php");
+		require("./views/newpass.php");
+		require("./views/footer.php");
+		break;
+
 	case 'logout':
 		unset($_SESSION['id']);
 		header("Location:/");
+		break;
+
+	case 'activate':
+		$message = NULL;
+		if (array_key_exists('token', $_GET)) {
+			try {
+				$usermodel->activate($_GET['token']);
+			} catch (Exception $e) {
+				$message = '<p class="message fail">'.$e->getMessage().'</p>';
+			}
+			$message = '<p class="message success">Vous pouvez désormais vous connecter</p>';
+		} else {
+			$message = '<p class="message fail">Impossible de valider le compte</p>';
+		}
+		require("./views/header.php");
+		require("./views/login.php");
+		require("./views/footer.php");
 		break;
 
 	case 'signup':
 		if ($_POST && $_POST['email'] && $_POST['pseudo'] && $_POST['password'] && $_POST['confirmation']) {
 			try {
 				$usermodel->signup($_POST['pseudo'], $_POST['email'], $_POST['password'], $_POST['confirmation']);
-				// header("Location:/user/login");
+				header("Location:/user/login");
 			} catch (Exception $e) {
 				$message = '<p class="message fail">'.$e->getMessage().'</p>';
 			}

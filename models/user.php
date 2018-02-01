@@ -12,6 +12,37 @@ class UserModel {
 		}
 	}
 
+	public function reset($email) {
+		global $db;
+		$checkmail = $db->prepare("SELECT * FROM users WHERE email = ?");
+		$checkmail->execute(array($email));
+		$existing = $checkmail->fetch();
+		if (!$existing) {
+			throw new Exception("Cet email n'existe pas");
+		}
+
+		// envoi mail
+
+	}
+
+	public function resetPass($password, $confirmation, $token) {
+		global $db;
+		if ($password != $confirmation) {
+			throw new Exception("Le mot de passe et sa confirmation ne correspondent pas");
+		}
+		if (strlen($password) < 8) {
+			throw new Exception("Le mot de passe doit contenir au moins 8 caractères");
+		}
+		$checkToken = $db->prepare("SELECT * FROM users WHERE activation_hash = ?");
+		$checkToken->execute(array($token));
+		$user = $checkToken->fetch();
+		if (!$user['id']) {
+			throw new Exception("Le token est invalide");
+		}
+		$setNew = $db->prepare("UPDATE users SET hash = ? WHERE id = ?");
+		$setNew->execute(array(password_hash($password, PASSWORD_BCRYPT), $user['id']));
+	}
+
 	public function signup($pseudo, $email, $password, $confirmation) {
 		global $db;
 		if (strlen($pseudo) < 3 || !preg_match("/^[a-z_ \-0-9]*$/i", $pseudo)) {
@@ -44,11 +75,20 @@ class UserModel {
 		$user = $db->prepare("SELECT * FROM users WHERE email = ?");
 		$user->execute(array($email));
 		$userdata = $user->fetch();
+		if ($userdata['active'] != 1) {
+			throw new Exception("Veuillez valider votre compte pour y accéder");
+		}
 		if (password_verify($password, $userdata['hash'])) {
 			$_SESSION['id'] = $userdata['id'];
 		} else {
 			throw new Exception("Informations de connexion invalides");
 		}
+	}
+
+	public function activate($token) {
+		global $db;
+		$user = $db->prepare("UPDATE users SET active = 1 WHERE activation_hash = ?");
+		$user->execute(array($token));
 	}
 
 	public function changePseudo($pseudo) {

@@ -7,7 +7,8 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `hash` varchar(255) NOT NULL,
   `active` boolean DEFAULT 0,
-  `activation_hash` varchar(255) NOT NULL
+  `activation_hash` varchar(255) NOT NULL,
+  `notif` boolean DEFAULT 1
 );
 
 CREATE TABLE `posts` (

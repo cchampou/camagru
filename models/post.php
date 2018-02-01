@@ -86,6 +86,12 @@ class PostModel {
 		global $db;
 		$do = $db->prepare("INSERT INTO comments VALUES (null, ?, ?, ?)");
 		$do->execute(array($id, $_SESSION['id'], $content));
+		$owner = $db->prepare("SELECT * FROM posts LEFT JOIN users ON users.id = posts.owner WHERE posts.id = ?");
+		$owner->execute(array($id));
+		$owner = $owner->fetch();
+		if ($owner['notif']) {
+			mail($owner['email'], "Camagru notifier", "Un commentaire a été ajouté a une de vos photos");
+		}
 		return;
 	}
 

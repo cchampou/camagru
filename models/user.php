@@ -12,6 +12,12 @@ class UserModel {
 		}
 	}
 
+	public function toggleNotif($notif) {
+		global $db;
+		$update = $db->prepare("UPDATE users SET notif = ? WHERE id = ?");
+		$update->execute(array($notif, $_SESSION['id']));
+	}
+
 	public function reset($email) {
 		global $db;
 		$checkmail = $db->prepare("SELECT * FROM users WHERE email = ?");
@@ -20,9 +26,7 @@ class UserModel {
 		if (!$existing) {
 			throw new Exception("Cet email n'existe pas");
 		}
-
-		// envoi mail
-
+		mail($email, "Reinitialiser votre mot de passe", 'Pour definir un nouveau mot de passe, cliquer sur ce lien : http://localhost:8080/user/newpass?token='.$existing['activation_hash']);
 	}
 
 	public function resetPass($password, $confirmation, $token) {
@@ -64,15 +68,17 @@ class UserModel {
 			throw new Exception("Cet email est déjà associé à un compte");
 		}
 		$create = $db->prepare('INSERT INTO users (pseudo, email, hash, activation_hash) VALUES (?, ?, ?, ?)');
-		// if (!$create->execute(array($pseudo, $email, password_hash($password, PASSWORD_BCRYPT), $activation_hash))) {
-		// 	throw new Exception("Une erreur inconnue est survenue lors de la création du compte ".$pseudo.' '.$email);
-		// }
-		$message = "OK";
-		$status = mail($email, "Activation de votre compte Camagru", $message);
-		throw new Exception("Status mail : ".$status);
-		// ) {
-		// 	throw new Exception("Echec de l'envoi du mail d'activation");
-		// }
+		if (!$create->execute(array($pseudo, $email, password_hash($password, PASSWORD_BCRYPT), $activation_hash))) {
+			throw new Exception("Une erreur inconnue est survenue lors de la création du compte ".$pseudo.' '.$email);
+		}
+		$headers = "From: camagru@42.fr\r\n";
+		$headers .= "Reply-To: clement@champouillon.com\r\n";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$message = '<a href="http://localhost:8080/user/activate?token='.$activation_hash.'">Activer mon compte</a>';
+		if(!mail($email, "Activation de votre compte Camagru", $message)) {
+			throw new Exception("Echec de l'envoi du mail d'activation");
+		}
 	}
 
 	public function login($email, $password) {
@@ -86,8 +92,9 @@ class UserModel {
 		if (password_verify($password, $userdata['hash'])) {
 			if ($userdata['active'] == 1) {
 				$_SESSION['id'] = $userdata['id'];
+			} else {
+				throw new Exception("Veuillez valider votre compte pour y accéder");
 			}
-			throw new Exception("Veuillez valider votre compte pour y accéder");
 		} else {
 			throw new Exception("Informations de connexion invalides");
 		}
@@ -132,13 +139,20 @@ class UserModel {
 		if (!$_SESSION['id']) {
 			throw new Exception("Vous devez être connecté pour effectuer cette action");
 		}
+		$old = $db->prepare("SELECT * FROM users WHERE id = ? ");
+		$old->execute(array($_SESSION['id']));
+		$old = $old->fetch();
+		if (!password_verify($password, $old['hash'])) {
+			throw new Exception("Le mot de passe actuel est incorrect");
+		}
 		if (strlen($new) < 8) {
 			throw new Exception("Le nouveau mot de passe doit contenir au moins 8 caractères");
 		}
-		if ($new != $confirmation) {
+		if ($new != $confirm) {
 			throw new Exception("Le nouveau mot de passe et sa confirmation ne correspondent pas");
 		}
-		$user = $this->getUser($_SESSION['id']);
+		$update = $db->prepare("UPDATE users SET hash = ? WHERE id = ?");
+		$update->execute(array(password_hash($new, PASSWORD_BCRYPT), $_SESSION['id']));
 	}
 
 	public function getUser($id) {

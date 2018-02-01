@@ -37,7 +37,7 @@ switch ($action) {
 		if ($_POST && $_POST['email']) {
 			try {
 				$message = $usermodel->reset($_POST['email']);
-				header("Location:/user/signup");
+				header("Location:/user/login");
 			} catch (Exception $e) {
 				$message = '<p class="message fail">'.$e->getMessage().'</p>';
 			}
@@ -92,7 +92,7 @@ switch ($action) {
 		if ($_POST && $_POST['email'] && $_POST['pseudo'] && $_POST['password'] && $_POST['confirmation']) {
 			try {
 				$usermodel->signup($_POST['pseudo'], $_POST['email'], $_POST['password'], $_POST['confirmation']);
-				// header("Location:/user/login");
+				header("Location:/user/login");
 			} catch (Exception $e) {
 				$message = '<p class="message fail">'.$e->getMessage().'</p>';
 			}
@@ -107,6 +107,14 @@ switch ($action) {
 	case "account":
 		if ($usermodel->checkLoggedIn()) {
 			if ($_POST) {
+				if (array_key_exists('notif', $_POST)) {
+					try {
+						$usermodel->toggleNotif($_POST['notif']);
+						$message0 = '<p class="message success">Préférences mises à jour</p>';
+					} catch (Exception $e) {
+						$message0 = '<p class="message fail">'.$e->getMessage().'</p>';
+					}
+				}
 				if (array_key_exists('changePseudo', $_POST)) {
 					if (array_key_exists('pseudo', $_POST) && $_POST['pseudo']) {
 						try {
@@ -141,7 +149,7 @@ switch ($action) {
 							unset($_POST['oldpassword']);
 							unset($_POST['password']);
 							unset($_POST['confirmation']);
-							$message2 = '<p class="message success">Votre mot de passe a été modifié avec succès</p>';
+							$message3 = '<p class="message success">Votre mot de passe a été modifié avec succès</p>';
 						} catch (Exception $e) {
 							$message3 = '<p class="message fail">'.$e->getMessage().'</p>';
 						}

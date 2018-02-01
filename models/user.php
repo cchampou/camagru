@@ -64,22 +64,30 @@ class UserModel {
 			throw new Exception("Cet email est déjà associé à un compte");
 		}
 		$create = $db->prepare('INSERT INTO users (pseudo, email, hash, activation_hash) VALUES (?, ?, ?, ?)');
-		if (!$create->execute(array($pseudo, $email, password_hash($password, PASSWORD_BCRYPT), $activation_hash))) {
-			throw new Exception("Une erreur inconnue est survenue lors de la création du compte ".$pseudo.' '.$email);
-		}
-		echo mail($email, "Activation de votre compte Camagru", "test");
+		// if (!$create->execute(array($pseudo, $email, password_hash($password, PASSWORD_BCRYPT), $activation_hash))) {
+		// 	throw new Exception("Une erreur inconnue est survenue lors de la création du compte ".$pseudo.' '.$email);
+		// }
+		$message = "OK";
+		$status = mail($email, "Activation de votre compte Camagru", $message);
+		throw new Exception("Status mail : ".$status);
+		// ) {
+		// 	throw new Exception("Echec de l'envoi du mail d'activation");
+		// }
 	}
 
 	public function login($email, $password) {
 		global $db;
+		if (strlen($email) <= 0 || strlen($password) <= 0) {
+			throw new Exception ("Veuillez renseigner tous les champs");
+		}
 		$user = $db->prepare("SELECT * FROM users WHERE email = ?");
 		$user->execute(array($email));
 		$userdata = $user->fetch();
-		if ($userdata['active'] != 1) {
-			throw new Exception("Veuillez valider votre compte pour y accéder");
-		}
 		if (password_verify($password, $userdata['hash'])) {
-			$_SESSION['id'] = $userdata['id'];
+			if ($userdata['active'] == 1) {
+				$_SESSION['id'] = $userdata['id'];
+			}
+			throw new Exception("Veuillez valider votre compte pour y accéder");
 		} else {
 			throw new Exception("Informations de connexion invalides");
 		}

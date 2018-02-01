@@ -19,7 +19,7 @@ switch ($action) {
 		if ($_GET && array_key_exists('prompt', $_GET) && $_GET['prompt'] == "true") {
 			$message = '<p class="message fail">Vous devez être connecté pour faire ceci</p>';
 		}
-		if ($_POST && $_POST['email'] && $_POST['password']) {
+		if ($_POST && isset($_POST['email']) && isset($_POST['password'])) {
 			try {
 				$message = $usermodel->login($_POST['email'], $_POST['password']);
 				header("Location:/");
@@ -92,7 +92,7 @@ switch ($action) {
 		if ($_POST && $_POST['email'] && $_POST['pseudo'] && $_POST['password'] && $_POST['confirmation']) {
 			try {
 				$usermodel->signup($_POST['pseudo'], $_POST['email'], $_POST['password'], $_POST['confirmation']);
-				header("Location:/user/login");
+				// header("Location:/user/login");
 			} catch (Exception $e) {
 				$message = '<p class="message fail">'.$e->getMessage().'</p>';
 			}

@@ -24,7 +24,7 @@
 				?>
 				<div id="dropdown-mobile" style="display: none;" data-wrapped="true">
 					<?php
-					if ($_SESSION && !array_key_exists('id', $_SESSION) || !$_SESSION['id']) {
+					if ($_SESSION && !array_key_exists('id', $_SESSION) || array_key_exists('id', $_SESSION) && !$_SESSION['id']) {
 						?>
 						<a href="/user/login"><i class="fas fa-sign-in-alt"></i> Connexion</a>
 						<a href="/user/signup" class="nav-highlight"><i class="fas fa-user-plus"></i> Inscription</a>
@@ -40,7 +40,7 @@
 			</nav>
 			<nav class="tablet-menu">
 				<?php
-				if ($_SESSION && !array_key_exists('id', $_SESSION) || !$_SESSION['id']) {
+				if ($_SESSION && !array_key_exists('id', $_SESSION) || array_key_exists('id', $_SESSION) && !$_SESSION['id']) {
 					?>
 					<a href="/user/login"><i class="fas fa-sign-in-alt"></i>&nbsp;</a>
 					<a href="/user/signup" class="nav-highlight"><i class="fas fa-user-plus"></i>&nbsp;</a>
@@ -56,7 +56,7 @@
 			</nav>
 			<nav class="desktop-menu">
 				<?php
-				if ($_SESSION && !array_key_exists('id', $_SESSION) || !$_SESSION['id']) {
+				if ($_SESSION && !array_key_exists('id', $_SESSION) || array_key_exists('id', $_SESSION) && !$_SESSION['id']) {
 					?>
 					<a href="/user/login"><i class="fas fa-sign-in-alt"></i> Connexion</a>
 					<a href="/user/signup" class="nav-highlight"><i class="fas fa-user-plus"></i> Inscription</a>
